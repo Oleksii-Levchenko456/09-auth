@@ -3,7 +3,7 @@
 
 import css from './NotesPage.module.css'
 import NoteList from '@/components/NoteList/NoteList'
-import { fetchNotes } from '@/lib/api'
+import { fetchNotes } from '@/lib/api/api'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import SearchBox from '@/components/SearchBox/SearchBox'

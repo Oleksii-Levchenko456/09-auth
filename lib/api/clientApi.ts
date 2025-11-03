@@ -1,6 +1,9 @@
 import axios from "axios"
 import type { Note } from "@/types/note"
+import { NextServer } from "./api"
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN
+
+
 
 export interface FetchNotesResponse {
     notes: Note[],
@@ -59,3 +62,25 @@ export const deleteNote = async (id: string): Promise<Note> => {
     })
     return res.data
 }
+
+export type registerRequest = {
+    email: string,
+    password: string
+}
+
+export const register = async (data: registerRequest) => {
+    const res = await NextServer.post('/auth/register', data)
+    return res.data
+}
+
+
+export const login = async (data: registerRequest) => {
+    const res = await NextServer.post('/auth/login', data)
+    return res.data
+
+}
+
+// logout
+// checkSession
+// getMe
+// updateMe
