@@ -4,14 +4,19 @@ import css from './SignUpPage.module.css'
 import { register } from '@/lib/api/clientApi'
 import { registerRequest } from '@/lib/api/clientApi'
 import { useRouter } from 'next/navigation'
+import { useAuthStore } from '@/lib/store/authStore'
+
 
 const Register = () => {
     const router = useRouter()
+
+    const setUser = useAuthStore((state) => state.setUser)
 
     const handleSubmit = async (formData: FormData) => {
         const formValues = Object.fromEntries(formData) as registerRequest
         const res = await register(formValues)
         if (res) {
+            setUser(res)
             router.push('/profile')
         }
 

@@ -6,18 +6,22 @@ import css from './SignInPage.module.css'
 import { login } from '@/lib/api/clientApi'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useAuthStore } from '@/lib/store/authStore'
 
 
 const Login = () => {
+    const setUser = useAuthStore((state) => state.setUser)
 
     const router = useRouter()
     const [error, setError] = useState('')
+
 
     const handleSubmit = async (formData: FormData) => {
         try {
             const formValue = Object.fromEntries(formData) as registerRequest
             const res = await login(formValue)
             if (res) {
+                setUser(res)
                 router.push('/profile')
             }
         } catch {
