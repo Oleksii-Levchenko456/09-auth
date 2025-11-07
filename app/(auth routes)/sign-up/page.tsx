@@ -5,20 +5,34 @@ import { register } from '@/lib/api/clientApi'
 import { registerRequest } from '@/lib/api/clientApi'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/lib/store/authStore'
+import { useState } from 'react'
+import { AxiosError } from 'axios'
+
 
 
 const Register = () => {
+
+    const [error, setError] = useState<string | null>(null)
+
     const router = useRouter()
 
     const setUser = useAuthStore((state) => state.setUser)
 
     const handleSubmit = async (formData: FormData) => {
+        setError(null)
         const formValues = Object.fromEntries(formData) as registerRequest
-        const res = await register(formValues)
-        if (res) {
-            setUser(res)
-            router.push('/profile')
+        try {
+            const res = await register(formValues)
+            if (res) {
+                setUser(res)
+                router.push('/profile')
+            }
         }
+        catch (e) {
+            const err = e as AxiosError<{ message?: string }>
+            setError(err.response?.data?.message ?? 'Something went wrong')
+        }
+
 
     }
 
@@ -42,7 +56,7 @@ const Register = () => {
                     </button>
                 </div>
 
-                <p className={css.error}>Error</p>
+                {error && <p className={css.error}>Error</p>}
             </form>
         </main>
 

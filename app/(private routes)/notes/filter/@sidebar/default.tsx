@@ -3,7 +3,7 @@ import css from './SidebarNotes.module.css'
 
 export default function SidebarNotes() {
 
-    const tags = ['all', 'Work', 'Personal', 'Meeting', 'Shopping', 'Todo']
+    const tags = ['all', 'Work', 'Personal', 'Meeting', 'Shopping', 'Ideas', 'Travel', 'Finance', 'Health', 'Important', 'Todo',]
 
     return (
         <aside >

@@ -1,4 +1,4 @@
-import axios from "axios"
+// import axios from "axios"
 import type { Note } from "@/types/note"
 import { NextServer } from "./api"
 import User from "@/types/user"
@@ -12,16 +12,16 @@ export interface FetchNotesResponse {
 }
 
 export const fetchNotes = async (page: number, perPage: number, search?: string, tag?: string): Promise<FetchNotesResponse> => {
-    const res = await axios.get<FetchNotesResponse>('/notes', {
+    const res = await NextServer.get<FetchNotesResponse>('/notes', {
         params: {
             page,
             perPage,
             search,
             tag
         },
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
+        // headers: {
+        //     Authorization: `Bearer ${token}`
+        // }
     })
     return (
         res.data
@@ -29,10 +29,10 @@ export const fetchNotes = async (page: number, perPage: number, search?: string,
 }
 
 export const getSingleNote = async (id: string): Promise<Note> => {
-    const res = await axios.get<Note>(`https://notehub-public.goit.study/api/notes/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
+    const res = await NextServer.get<Note>(`/notes/${id}`, {
+        // headers: {
+        //     Authorization: `Bearer ${token}`
+        // }
     })
     return res.data
 }
@@ -44,19 +44,19 @@ export interface requestBodyData {
 }
 
 export const createNote = async (requestBody: requestBodyData): Promise<Note> => {
-    const res = await axios.post<Note>('https://notehub-public.goit.study/api/notes',
+    const res = await NextServer.post<Note>('/notes',
         requestBody,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
+        // {
+        // headers: {
+        //     Authorization: `Bearer ${token}`
+        // }
+        // }
     )
     return res.data
 }
 
 export const deleteNote = async (id: string): Promise<Note> => {
-    const res = await axios.delete<Note>(`https://notehub-public.goit.study/api/notes/${id}`, {
+    const res = await NextServer.delete<Note>(`/notes/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`
         }

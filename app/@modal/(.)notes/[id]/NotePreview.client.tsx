@@ -2,7 +2,7 @@
 
 import NewModal from '@/components/Modal/NewModal'
 import { useQuery } from '@tanstack/react-query'
-import { getSingleNote } from '@/lib/api/api'
+import { getSingleNote } from '@/lib/api/clientApi'
 import { useRouter } from 'next/navigation'
 import { keepPreviousData } from '@tanstack/react-query'
 
