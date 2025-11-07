@@ -24,7 +24,7 @@ export const AuthNavigation = () => {
     }
 
     return isAuthenticated ? (
-        <ul>
+        <ul >
             <li className={css.navigationItem}>
                 <Link href="/profile" prefetch={false} className={css.navigationLink}>
                     Profile
@@ -37,7 +37,7 @@ export const AuthNavigation = () => {
                 </button>
             </li>
         </ul>) : (
-        <ul>
+        <ul >
             <li className={css.navigationItem}>
                 <Link href="/sign-in" prefetch={false} className={css.navigationLink}>
                     Login
