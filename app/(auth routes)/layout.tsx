@@ -15,10 +15,14 @@ export default function PublicLayout({ children }: Props) {
     const router = useRouter();
 
     useEffect(() => {
-        // refresh викличе перезавантаження даних
-        router.refresh();
-        setLoading(false);
+        const refreshAndStopLoading = async () => {
+            await router.refresh();  // чекаємо завершення
+            setLoading(false);       // тепер без каскаду
+        };
+
+        refreshAndStopLoading();
     }, [router]);
+
 
     return <>{loading ? <div>Loading...</div> : children}</>;
 }

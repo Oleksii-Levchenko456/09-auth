@@ -1,6 +1,7 @@
 import axios from "axios"
 import type { Note } from "@/types/note"
 import { NextServer } from "./api"
+import User from "@/types/user"
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN
 
 
@@ -80,7 +81,38 @@ export const login = async (data: registerRequest) => {
 
 }
 
-// logout
 // checkSession
+
+type CheckSessionRequest = {
+    success: boolean;
+};
+
+export const checkSession = async () => {
+    const res = await NextServer.get<CheckSessionRequest>('/auth/session');
+    return res.data.success;
+};
+
+// logout
+
+export const logout = async (): Promise<void> => {
+    await NextServer.post('/auth/logout')
+
+}
+
 // getMe
+
+export const getMe = async () => {
+    // можливо неправельний User
+    const { data } = await NextServer.get<User>('/users/me');
+    return data;
+};
 // updateMe
+
+interface UpdateMeRequest {
+    email: string
+    username: string
+}
+export const updateMe = async (dataUseer: UpdateMeRequest) => {
+    const res = await NextServer.patch('/users/me', dataUseer)
+    return res.data
+}
