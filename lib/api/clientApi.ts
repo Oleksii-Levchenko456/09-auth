@@ -1,8 +1,7 @@
-// import axios from "axios"
 import type { Note } from "@/types/note"
 import { NextServer } from "./api"
-import User from "@/types/user"
-const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN
+import { User } from "@/types/user"
+// const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN
 
 
 
@@ -19,9 +18,7 @@ export const fetchNotes = async (page: number, perPage: number, search?: string,
             search,
             tag
         },
-        // headers: {
-        //     Authorization: `Bearer ${token}`
-        // }
+
     })
     return (
         res.data
@@ -30,9 +27,7 @@ export const fetchNotes = async (page: number, perPage: number, search?: string,
 
 export const getSingleNote = async (id: string): Promise<Note> => {
     const res = await NextServer.get<Note>(`/notes/${id}`, {
-        // headers: {
-        //     Authorization: `Bearer ${token}`
-        // }
+
     })
     return res.data
 }
@@ -46,20 +41,14 @@ export interface requestBodyData {
 export const createNote = async (requestBody: requestBodyData): Promise<Note> => {
     const res = await NextServer.post<Note>('/notes',
         requestBody,
-        // {
-        // headers: {
-        //     Authorization: `Bearer ${token}`
-        // }
-        // }
+
     )
     return res.data
 }
 
 export const deleteNote = async (id: string): Promise<Note> => {
     const res = await NextServer.delete<Note>(`/notes/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
+
     })
     return res.data
 }
@@ -69,13 +58,13 @@ export type registerRequest = {
     password: string
 }
 
-export const register = async (data: registerRequest) => {
+export const register = async (data: registerRequest): Promise<User> => {
     const res = await NextServer.post('/auth/register', data)
     return res.data
 }
 
 
-export const login = async (data: registerRequest) => {
+export const login = async (data: registerRequest): Promise<User> => {
     const res = await NextServer.post('/auth/login', data)
     return res.data
 
@@ -101,18 +90,16 @@ export const logout = async (): Promise<void> => {
 
 // getMe
 
-export const getMe = async () => {
-    // можливо неправельний User
+export const getMe = async (): Promise<User> => {
     const { data } = await NextServer.get<User>('/users/me');
     return data;
 };
 // updateMe
 
 interface UpdateMeRequest {
-    email: string
     username: string
 }
-export const updateMe = async (dataUseer: UpdateMeRequest) => {
-    const res = await NextServer.patch('/users/me', dataUseer)
+export const updateMe = async (dataUser: UpdateMeRequest): Promise<User> => {
+    const res = await NextServer.patch('/users/me', dataUser)
     return res.data
 }

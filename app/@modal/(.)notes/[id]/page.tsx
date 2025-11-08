@@ -1,6 +1,6 @@
-import { getSingleNote } from '@/lib/api/clientApi'
 import NotesPreview from './NotePreview.client'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
+import { fetchServerNoteById } from '@/lib/api/serverApi'
 
 
 
@@ -13,7 +13,7 @@ export default async function Page({ params }: Props) {
     const queryClient = new QueryClient()
     await queryClient.prefetchQuery({
         queryKey: ['note', noteId],
-        queryFn: () => getSingleNote(noteId)
+        queryFn: () => fetchServerNoteById(noteId)
     })
 
     return (

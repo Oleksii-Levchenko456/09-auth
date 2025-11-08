@@ -7,6 +7,7 @@ import css from './EditProfilePage.module.css'
 import Image from "next/image"
 import { updateMe } from "@/lib/api/clientApi"
 import { useRouter } from "next/navigation"
+import { useAuthStore } from "@/lib/store/authStore"
 
 
 
@@ -14,6 +15,7 @@ const EditPage = () => {
 
     const router = useRouter()
 
+    const setUser = useAuthStore((state) => state.setUser)
 
     const [userNameValue, setUserNameValue] = useState('')
     const [emailValue, setEmailValue] = useState('')
@@ -34,7 +36,11 @@ const EditPage = () => {
     const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         try {
-            await updateMe({ email: emailValue, username: userNameValue })
+            const updated = await updateMe({ username: userNameValue })
+            setUser(updated)
+            router.push('/profile')
+
+
         } catch {
 
         }

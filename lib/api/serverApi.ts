@@ -1,9 +1,9 @@
 import { cookies } from "next/headers"
 import { NextServer } from "./api"
-import User from "@/types/user"
-
+import type { User } from "@/types/user"
+import { Note } from "@/types/note"
 // fetchNotes
-export const fetchServerNotes = async (page: number, perPage: number, search?: string, tag?: string) => {
+export const fetchServerNotes = async (page: number, perPage: number, search?: string, tag?: string): Promise<Note[]> => {
     const cookieStore = await cookies()
     const res = await NextServer.get('/notes',
         {
@@ -17,10 +17,18 @@ export const fetchServerNotes = async (page: number, perPage: number, search?: s
                 Cookie: cookieStore.toString()
             }
         })
-    return res
+    return res.data
 }
 
 // fetchNoteById
+export const fetchServerNoteById = async (id: string): Promise<Note> => {
+    const res = await NextServer.get(`/notes/${id}`, {
+        headers: {
+            Cookie: cookieStore.toString()
+        }
+    })
+    return res.data
+}
 
 
 export const checkServerSession = async () => {
